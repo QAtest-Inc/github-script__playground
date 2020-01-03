@@ -1,0 +1,19 @@
+name: Comment on an issue
+
+on:
+  issues: 
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/actions/github-script/pull/17
+      - uses: francisfuzz/github-script@5abce7d243703a5563ce3a4cd8d032588b362947
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({...context.issue, body: [
+              '👋 Thanks for reporting!',
+              '_Executed using `francisfuzz/github-script@5abce7d243703a5563ce3a4cd8d032588b362947`_.'
+            ].join("\n\n")})
