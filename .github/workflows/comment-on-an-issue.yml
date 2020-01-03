@@ -14,7 +14,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             
-            const [owner, repo] = context.payload.repository.full_name.split('/')
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
             const issue_number = context.payload.issue.number
 
             const newComment = await github.issues.createComment({
