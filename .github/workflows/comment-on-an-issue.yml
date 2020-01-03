@@ -13,7 +13,15 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({...context.issue, body: [
-              '👋 Thanks for reporting!',
-              '_Executed using `francisfuzz/github-script@5abce7d243703a5563ce3a4cd8d032588b362947`_.'
-            ].join("\n\n")})
+            
+            const [owner, repo] = context.payload.repository.full_name.split('/')
+            const issue_number = context.payload.issue.number
+
+            const newComment = await github.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: "👋 Thanks for reporting!"
+            })
+            
+            console.log(`Comment created. View at ${newComment.data.html_url}`)
