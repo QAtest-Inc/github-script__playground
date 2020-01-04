@@ -6,6 +6,7 @@ on:
 
 jobs:
   comment:
+    if: github.actor == 'francisfuzz'
     runs-on: ubuntu-latest
     steps:
       # https://github.com/actions/github-script/pull/17
