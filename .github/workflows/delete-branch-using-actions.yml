@@ -16,7 +16,7 @@ jobs:
         script: |
           
           // https://octokit.github.io/rest.js/#octokit-routes-git-delete-ref
-          const result = await github..git.deleteRef({
+          const result = await github.git.deleteRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
             ref: "bot-target"
