@@ -18,11 +18,11 @@ jobs:
           // https://octokit.github.io/rest.js/#octokit-routes-git-delete-ref
           // https://developer.github.com/v3/git/refs/#delete-a-reference
           
-          // The API expects `ref` to be in the form of `refs/heads/REPLACE_REF_NAME_HERE`. 
+          // The API expects `ref` to be in the form of `heads/REPLACE_REF_NAME_HERE`. 
           const result = await github.git.deleteRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            ref: "refs/heads/bot-target"
+            ref: "heads/bot-target"
           })
           
           console.log(result)
