@@ -10,13 +10,19 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: [1.1, 1.1.0, 2, 2.0, 2.0.0]
 
     # Fetch the rate limit at each version of actions/github-script
     steps:
-    - uses: actions/github-script@${{ matrix.version }}
+    - uses: actions/github-script@v1.1.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+
+          // https://octokit.github.io/rest.js/v17#rate-limit-get
+          const result = await github.rateLimit.get()
+          console.log(result)
+
+    - uses: actions/github-script@v2.0.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
