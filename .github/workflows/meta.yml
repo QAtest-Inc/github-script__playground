@@ -16,7 +16,7 @@ jobs:
 
     # Fetch the rate limit at each version of actions/github-script
     steps:
-    - uses: actions/github-script@${{ matrix.node }}
+    - uses: actions/github-script@${{ matrix.version }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
