@@ -1,5 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
+# Workflow for using recent versions of `actions/github-script`.
+# Invocation: `curl -v -H "Authorization: token $TOKEN" "https://api.github.com/repos/actions-packages-examples/github-script__playground/dispatches" -X POST -d '{"event_type":"trigger"}'`
 name: Meta
 
 on: repository_dispatch
