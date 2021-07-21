@@ -19,7 +19,8 @@ jobs:
             repo: context.repo.repo,
             name: "Actions-created check run by workflow in actions-packages-examples/github-script__playground",
             head_sha: context.payload.after,
-            status: "completed"
+            status: "completed",
+            conclusion: "neutral"
           })
           
           // Update the check run status to `in_progress`.
