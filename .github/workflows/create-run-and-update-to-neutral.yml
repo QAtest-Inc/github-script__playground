@@ -1,11 +1,11 @@
-name: create-and-update-check-run-on-push
+name: create-run-and-update-to-neutral
 on: push
 
 jobs:
-  create-and-update-check-run:
+  job_1:
     runs-on: ubuntu-latest
     steps:
-    - name: Create & update check run
+    - name: Create check run and update to neutral
       uses: actions/github-script@v4.0.2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
