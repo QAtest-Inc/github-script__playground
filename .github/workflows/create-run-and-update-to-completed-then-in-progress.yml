@@ -1,0 +1,48 @@
+name: create-run-and-update-to-completed-then-in-progress
+on: push
+
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create check run, then run two updates
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        debug: true
+        previews: 'antiope-preview'
+        script: |
+        
+          // First, create the check run. Automatically sets to `status` to `queued`.
+          const { data: checkRun } = await github.checks.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            name: "Actions-created check run by workflow in actions-packages-examples/github-script__playground",
+            head_sha: context.payload.after
+          })
+
+          console.log(`[DEBUG] Create check run`)
+          console.log(checkRun)
+          
+          // Next, update the check run conclusion to `success`, which automatically updates status to `completed`.
+          const { data: completedCheckRun } = await github.checks.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            check_run_id: checkRun.id,
+            conclusion: "success"
+          })
+
+          console.log(`[DEBUG] Update check run (1)`)
+          console.log(completedCheckRun)
+          
+          // Finally, update the check run status to `in_progress`.
+          // Does this update successfully, or should it fail based on the existing `completed` status?
+          const { data: updatedCheckRun } = await github.checks.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            check_run_id: checkRun.id,
+            status: "in_progress"
+          })
+
+          console.log(`[DEBUG] Update check run (2)`)
+          console.log(updateCheckRun)
