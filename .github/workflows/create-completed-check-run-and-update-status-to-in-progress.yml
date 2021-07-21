@@ -1,0 +1,37 @@
+name: create-completed-check-run-and-update-status-to-in-progress
+on: push
+
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create completed check run, then try updating status to in_progress
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        debug: true
+        previews: 'antiope-preview'
+        script: |
+        
+          // Create the check run with `status` set to `completed`.
+          const { data: checkRun } = await github.checks.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            name: "Actions-created check run by workflow in actions-packages-examples/github-script__playground",
+            head_sha: context.payload.after,
+            status: "completed"
+          })
+          
+          // Update the check run status to `in_progress`.
+          const { data: updatedCheckRun } = await github.checks.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            check_run_id: checkRun.id,
+            status: "in_progress"
+          })
+          
+          // Render the cached responses.
+          console.log(`[DEBUG] Create check run`)
+          console.log(checkRun)
+          console.log(`[DEBUG] Update check run (1)`)
+          console.log(updatedCheckRun)
