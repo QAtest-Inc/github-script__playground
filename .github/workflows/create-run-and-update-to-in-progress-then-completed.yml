@@ -5,7 +5,7 @@ jobs:
   job_1:
     runs-on: ubuntu-latest
     steps:
-    - name: Create check run and update to neutral
+    - name: Create check run, then run two updates
       uses: actions/github-script@v4.0.2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,9 +33,14 @@ jobs:
           const { data: completedCheckRun } = await github.checks.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            check_run_id: updatedCheckRun.id,
+            check_run_id: checkRun.id,
             conclusion: "success"
           })
           
-          // Render the cached response.
+          // Render the cached responses.
+          console.log(`[DEBUG] Create check run`)
+          console.log(checkRun)
+          console.log(`[DEBUG] Update check run (1)`)
+          console.log(updatedCheckRun)
+          console.log(`[DEBUG] Update check run (2)`)
           console.log(completedCheckRun)
